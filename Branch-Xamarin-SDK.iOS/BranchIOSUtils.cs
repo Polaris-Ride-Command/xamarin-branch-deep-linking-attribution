@@ -219,7 +219,7 @@ namespace BranchXamarinSDK.iOS
                             res.ContentMetadata.RatingAverage = Convert.ToDouble(obj.metadata.Metadata["$rating_average"].ToString());
                         }
                         if (key.Equals("$rating_count")) {
-                            res.ContentMetadata.RatingCount = new nint(Convert.ToInt32(obj.metadata.Metadata["$rating_count"].ToString()));
+                            res.ContentMetadata.RatingCount = (nint)Convert.ToInt32(obj.metadata.Metadata["$rating_count"].ToString());
                         }
                         if (key.Equals("$rating_max")) {
                             res.ContentMetadata.RatingMax = Convert.ToDouble(obj.metadata.Metadata["$rating_max"].ToString());
