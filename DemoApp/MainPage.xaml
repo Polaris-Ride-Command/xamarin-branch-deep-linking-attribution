@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DemoApp.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Spacing="25"
+            Padding="30,0"
+            VerticalOptions="Center">
+
+            <Image
+                Source="dotnet_bot.png"
+                SemanticProperties.Description="Cute dot net bot waving hi to you!"
+                HeightRequest="200"
+                HorizontalOptions="Center" />
+
+            <Label
+                Text="{Binding Title}"
+                SemanticProperties.HeadingLevel="Level2"
+                FontSize="18"
+                HorizontalOptions="Center" />
+
+            <VerticalStackLayout>
+                <Label
+                    Text="To test Branch links (only works on Android currently):" />
+
+                <Label
+                    Text="1.) Make sure the ORV Ride Command app is not installed on this device" />
+
+                <Label
+                    Text="2.) Click this button to copy a branch link to your clipboard: " />
+
+                <Button Text="Click Me!"
+                        HorizontalOptions="Center"
+                        Command="{Binding CopyLinkCommand}"
+                        Clicked="CopyLinkButtonClicked" />
+                <Label
+                    Text="3.) Background this app and paste the link into a browser" />
+
+                <Label
+                    Text="4.) The link will open this app and Branch link data will be displayed on the link details page" />
+
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
+

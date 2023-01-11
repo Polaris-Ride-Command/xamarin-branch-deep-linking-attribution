@@ -1,9 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net6.0-ios</TargetFrameworks>
+    <TargetFrameworks>net7.0-ios</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo> <!-- Turn off automatic assembly info generation and use values from the AssemblyInfo.cs file -->
     <SupportedOSPlatformVersion>11.0</SupportedOSPlatformVersion>
+    <OutputType>Library</OutputType>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -20,14 +21,11 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <None Remove="Branch-Xamarin-Lib.iOS" />
-  </ItemGroup>
-  <ItemGroup>
     <Reference Include="Branch-Xamarin-Lib.iOS">
-      <HintPath>..\Branch-Xamarin-Lib.iOS\bin\Debug\net6.0-ios\Branch-Xamarin-Lib.iOS.dll</HintPath>
+      <HintPath>..\Branch-Xamarin-Lib.iOS\bin\Debug\net7.0-ios\Branch-Xamarin-Lib.iOS.dll</HintPath>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Branch-Xamarin-SDK\Branch-Xamarin-SDK.csproj" />
+    <Reference Include="Branch-Xamarin-SDK">
+      <HintPath>..\Branch-Xamarin-SDK\bin\Debug\netstandard2.1\Branch-Xamarin-SDK.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>

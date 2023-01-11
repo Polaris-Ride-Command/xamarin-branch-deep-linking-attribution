@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DemoApp.LinkDetailsPage"
+             Title="Branch Link Details Page">
+    <VerticalStackLayout>
+        <Label 
+            Text="A Branch link has been clicked!"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center"
+            Padding="0, 0, 0, 15" />
+
+        <Label
+            Text="Referring Parameters"
+            FontAttributes="Bold"
+            Padding="0, 0, 0, 5" />
+
+        <Label Text="{Binding BranchLinkData}" />
+    </VerticalStackLayout>
+</ContentPage>

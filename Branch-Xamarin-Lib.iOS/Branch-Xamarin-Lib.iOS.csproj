@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net6.0-ios</TargetFrameworks>
+    <TargetFrameworks>net7.0-ios</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo> <!-- Turn off automatic assembly info generation and use values from the AssemblyInfo.cs file -->
     <IsBindingProject>true</IsBindingProject>
@@ -13,12 +13,18 @@
     <ObjcBindingApiDefinition Include="ApiDefinition.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ObjcBindingCoreSource Include="Structs.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <NativeReference Include="Branch.a">
       <Kind>Static</Kind>
       <SmartLink>False</SmartLink>
     </NativeReference>
   </ItemGroup>
   <ItemGroup>
-    <ObjcBindingCoreSource Include="Structs.cs" />
+    <None Remove="Branch.a" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Branch.linkwith.cs" />
   </ItemGroup>
 </Project>
