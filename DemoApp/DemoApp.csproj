@@ -12,7 +12,7 @@
 		<ApplicationTitle>Branch.io Demo</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.polarisindustries.ORVTrails</ApplicationId>
+		<ApplicationId>com.branch.io.demo.app</ApplicationId>
 		<ApplicationIdGuid>96ad4493-aec5-4454-8028-8fad868212fb</ApplicationIdGuid>
 
 		<!-- Versions -->
@@ -21,13 +21,12 @@
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">11.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
-		<AssemblyName>DemoApp2</AssemblyName>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
 	  <CreatePackage>false</CreatePackage>
-	  <CodesignProvision>Tom S ORV Dev PP</CodesignProvision>
-	  <CodesignKey>iPhone Developer</CodesignKey>
+	  <CodesignProvision>Polaris Ride Command (In-House)</CodesignProvision>
+	  <CodesignKey>iPhone Distribution: Polaris Industries, Inc.</CodesignKey>
 	  <CodesignEntitlements>Platforms\iOS\Entitlements.plist</CodesignEntitlements>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-ios|AnyCPU'">
@@ -35,10 +34,8 @@
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
 	  <WarningLevel>4</WarningLevel>
-	  <AssemblyName>DemoApp</AssemblyName>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-	  <AssemblyName>DemoApp2</AssemblyName>
 	</PropertyGroup>
 	<ItemGroup>
 		<!-- App Icon -->
@@ -66,6 +63,7 @@
 	  <None Remove="Branch-Xamarin-Lib.iOS" />
 	  <None Remove="Branch-Xamarin-SDK.iOS" />
 	  <None Remove="Newtonsoft.Json" />
+	  <None Remove="Microsoft.iOS, Version=16.1.0.0, Culture=neutral, PublicKeyToken=84e04ff9cfb79065" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Reference Include="Branch-Xamarin-Lib.Droid">
@@ -83,6 +81,7 @@
 	  <Reference Include="Branch-Xamarin-SDK.iOS">
 	    <HintPath>..\Branch-Xamarin-SDK.iOS\bin\Debug\net7.0-ios\Branch-Xamarin-SDK.iOS.dll</HintPath>
 	  </Reference>
+	  <Reference Include="Microsoft.iOS, Version=16.1.0.0, Culture=neutral, PublicKeyToken=84e04ff9cfb79065" />
 	</ItemGroup>
 	<ItemGroup>
 	  <MauiImage Include="Resources\Images\dotnet_bot.svg" />

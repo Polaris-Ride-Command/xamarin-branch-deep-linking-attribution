@@ -3,20 +3,22 @@ using BranchXamarinSDK;
 
 namespace DemoApp;
 
-public partial class App : Application, IBranchSessionInterface, IBranchBUOSessionInterface
+public partial class App : Application, /*IBranchSessionInterface,*/ IBranchBUOSessionInterface
 {
     // DEV
-    public const string DevBranchIoKey = "key_test_eoMhNwmzvq3WUBYiBF8XNbboAElr16yQ"; // Key for the "Polaris RC Stage/Dev TEST" app in the Branch.io portal (dev environment)
-    public const string DevBranchLink = "https://up0q.test-app.link/Eq74AgIEiwb";     // "Branch demo waypoint", dev env.
+    // Note: this option does NOT work on the iOS simulator for some reason. Works fine on iOS devices.
+    //public const string DevBranchIoKey = "key_test_eoMhNwmzvq3WUBYiBF8XNbboAElr16yQ"; // Key for the "Polaris RC Stage/Dev TEST" app in the Branch.io portal (dev environment)
+    //public const string DevBranchLink = "https://up0q.test-app.link/Eq74AgIEiwb";     // "Branch demo waypoint"
 
     // STAGE
-    //public const string StageBranchIoKey = "key_live_bnVgKwoqFtZZUy9fErZWNbdprBgFY9FF"; // Key for the "Polaris RC Stage/Dev LIVE" app (stage environment)
-    //public const string StageBranchLink = "https://up0q.app.link/NGAbM2xQvwb";
-
+    // Note: this works on iOS devices and simulator
+    public const string StageBranchIoKey = "key_live_bnVgKwoqFtZZUy9fErZWNbdprBgFY9FF"; // Key for the "Polaris RC Stage/Dev LIVE" app (stage environment)
+    public const string StageBranchLink = "https://up0q.app.link/NGAbM2xQvwb";          // "Branch demo waypoint (stage)"
 
 
     // iOS Branch Setup Checklist:
     // DEV
+    //     API key and link: Dev variables (above)
     //            Bundle ID: com.polarisindustries.ORVTrails
     //     Signing Identity: Developer (Automatic)
     // Provisioning Profile: Tom S ORV Dev PP
@@ -25,6 +27,7 @@ public partial class App : Application, IBranchSessionInterface, IBranchBUOSessi
     //  com.apple.developer.associated-domains: applinks:up0q.test-app.link
 
     // STAGE
+    //     API key and link: Stage variables (above)
     //            Bundle ID: com.polarisindustries.orvtrails.inhouse
     //     Signing Identity: Developer
     // Provisioning Profile: Distribution: Polaris Industries, Inc.
@@ -41,14 +44,15 @@ public partial class App : Application, IBranchSessionInterface, IBranchBUOSessi
 		MainPage = new NavigationPage(page);
 	}
 
-    public void InitSessionComplete(Dictionary<string, object> data)
-    {
-        Debug.WriteLine($"InitSessionComplete");
-        Debug.WriteLine("data");
+    // Doesn't look like this method is ever called. This is part of the IBranchSessionInterface, but I think we only use IBranchBUOSessionInterface in the RC apps
+    //public void InitSessionComplete(Dictionary<string, object> data)
+    //{
+    //    Debug.WriteLine($"InitSessionComplete");
+    //    Debug.WriteLine("data");
 
-        foreach (var item in data)
-            Debug.WriteLine($" {item.Key}: {item.Value}");
-    }
+    //    foreach (var item in data)
+    //        Debug.WriteLine($" {item.Key}: {item.Value}");
+    //}
 
     /// <summary>
     /// This method gets called after the Branch library initialization on app launch and after the app is opened by a branch link
@@ -97,7 +101,6 @@ public partial class App : Application, IBranchSessionInterface, IBranchBUOSessi
             }
         }
 
-
         var referringParams = Branch.GetInstance().GetLastReferringParams();
         if (referringParams != null)
         {
@@ -106,24 +109,41 @@ public partial class App : Application, IBranchSessionInterface, IBranchBUOSessi
             foreach (var param in referringParams)
                 Debug.WriteLine($" {param.Key}: {param.Value}");
 
-            
-            if (referringParams.ContainsKey("+clicked_branch_link"))
+
+            await NavigateToDetailsPage(referringParams);
+        }
+    }
+
+    /// <summary>
+    /// Navigate to the link details page if the referringParams indicate that the user clicked on a Branch link
+    /// </summary>
+    private async Task NavigateToDetailsPage(Dictionary<string, object> referringParams)
+    {
+        if (referringParams.ContainsKey("+clicked_branch_link"))
+        {
+            var objectValue = referringParams["+clicked_branch_link"];
+            var canParseBool = bool.TryParse(objectValue.ToString(), out bool clickedBranchLink); // for Android
+
+            // iOS uses 1 and 0 instead of True and False
+            if (Microsoft.Maui.Devices.DeviceInfo.Current.Platform == Microsoft.Maui.Devices.DevicePlatform.iOS)
             {
-                var objectValue = referringParams["+clicked_branch_link"];
-                var canParseBool = bool.TryParse(objectValue.ToString(), out bool clickedBranchLink);
+                var clickediOSBranchLink = objectValue.ToString() == "1";
 
-                if (canParseBool && clickedBranchLink)
+                if (clickediOSBranchLink)
+                    canParseBool = clickedBranchLink = true;
+            }
+
+            if (canParseBool && clickedBranchLink)
+            {
+                Debug.WriteLine("");
+                Debug.WriteLine($"Branch link was clicked!");
+
+                var vm = new LinkDetailsViewModel
                 {
-                    Debug.WriteLine("");
-                    Debug.WriteLine($"Branch link was clicked!");
+                    ReferringParams = referringParams
+                };
 
-                    var vm = new LinkDetailsViewModel
-                    {
-                        ReferringParams = referringParams
-                    };
-
-                    await Application.Current.MainPage.Navigation.PushAsync(new LinkDetailsPage(vm));
-                }
+                await Application.Current.MainPage.Navigation.PushAsync(new LinkDetailsPage(vm));
             }
         }
     }

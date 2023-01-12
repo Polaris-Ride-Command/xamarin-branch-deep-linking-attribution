@@ -1,6 +1,8 @@
 ﻿using System.Diagnostics;
 using BranchXamarinSDK;
 using Foundation;
+using MapKit;
+using Microsoft.Maui.LifecycleEvents;
 using UIKit;
 
 namespace DemoApp;
@@ -14,13 +16,8 @@ public class AppDelegate : MauiUIApplicationDelegate
     {
         Branch.EnableLogging = true;
 
-        BranchIOS.Init(App.DevBranchIoKey, launchOptions ?? new NSDictionary(), (IBranchBUOSessionInterface)App.Current); // problem here is that App.Current is null
-        //BranchIOS.Init(App.StageBranchIoKey, launchOptions ?? new NSDictionary(), (IBranchBUOSessionInterface)App.Current);
-
-
-        // This works to get InitSessionComplete() called (on app launch and link open) but navigation to LinkDetailsPage then fails
-        //var app = new App(new MainPage(new MainPageViewModel()));
-        //BranchIOS.Init(App.DevBranchIoKey, launchOptions ?? new NSDictionary(), (IBranchBUOSessionInterface)app);
+        //BranchIOS.Init(App.DevBranchIoKey, launchOptions ?? new NSDictionary(), (IBranchBUOSessionInterface)App.Current); // problem here is that App.Current is null
+        // 1/12/23 - initialization for this was moved to the builder in MauiProgram.cs so we can get an instance of the App class
 
         return base.FinishedLaunching(application, launchOptions);
     }

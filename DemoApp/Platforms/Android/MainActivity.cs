@@ -38,7 +38,8 @@ public class MainActivity : MauiAppCompatActivity
     {
         base.OnCreate(savedInstanceState);
 
-        BranchAndroid.Init(this, App.DevBranchIoKey, (IBranchBUOSessionInterface)App.Current);
+        //BranchAndroid.Init(this, App.DevBranchIoKey, (IBranchBUOSessionInterface)App.Current);
+        BranchAndroid.Init(this, App.StageBranchIoKey, (IBranchBUOSessionInterface)App.Current);
     }
 
     protected override void OnNewIntent(Intent intent)

@@ -27,8 +27,8 @@ namespace DemoApp
             {
                 return new Command(async () =>
                 {
-                    var branchLink = App.DevBranchLink;
-                    //var branchLink = App.StageBranchLink;
+                    //var branchLink = App.DevBranchLink;
+                    var branchLink = App.StageBranchLink;
 
                     await Clipboard.Default.SetTextAsync(branchLink);
                 });
