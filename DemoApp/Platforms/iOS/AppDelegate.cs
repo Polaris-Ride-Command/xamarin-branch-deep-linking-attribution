@@ -14,8 +14,13 @@ public class AppDelegate : MauiUIApplicationDelegate
     {
         Branch.EnableLogging = true;
 
-        //BranchIOS.Init(App.DevBranchIoKey, launchOptions ?? new NSDictionary(), (IBranchBUOSessionInterface)App.Current);
-        BranchIOS.Init(App.StageBranchIoKey, launchOptions ?? new NSDictionary(), (IBranchBUOSessionInterface)App.Current);
+        BranchIOS.Init(App.DevBranchIoKey, launchOptions ?? new NSDictionary(), (IBranchBUOSessionInterface)App.Current); // problem here is that App.Current is null
+        //BranchIOS.Init(App.StageBranchIoKey, launchOptions ?? new NSDictionary(), (IBranchBUOSessionInterface)App.Current);
+
+
+        // This works to get InitSessionComplete() called (on app launch and link open) but navigation to LinkDetailsPage then fails
+        //var app = new App(new MainPage(new MainPageViewModel()));
+        //BranchIOS.Init(App.DevBranchIoKey, launchOptions ?? new NSDictionary(), (IBranchBUOSessionInterface)app);
 
         return base.FinishedLaunching(application, launchOptions);
     }
@@ -27,9 +32,7 @@ public class AppDelegate : MauiUIApplicationDelegate
             var isBranchLink = userActivity.WebPageUrl.AbsoluteString.Contains("app.link") || userActivity.WebPageUrl.AbsoluteString.Contains("bnc.lt");
 
             if (isBranchLink)
-            {
                 return BranchIOS.getInstance().ContinueUserActivity(userActivity);
-            }
         }
 
         return base.ContinueUserActivity(application, userActivity, completionHandler);

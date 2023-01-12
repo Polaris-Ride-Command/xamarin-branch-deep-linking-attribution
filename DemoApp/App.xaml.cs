@@ -5,30 +5,33 @@ namespace DemoApp;
 
 public partial class App : Application, IBranchSessionInterface, IBranchBUOSessionInterface
 {
-    // Links to test:
-    public const string DevBranchLink = "https://up0q.test-app.link/Eq74AgIEiwb"; // "Branch demo waypoint", dev env.
-    public const string StageBranchLink = "https://up0q.app.link/NGAbM2xQvwb";
-    // You can add ?debug=true to the end of any of these links to debug them in the branch.io portal and see all the link details
-
-
-    // This is the key for the "Polaris RC Stage/Dev TEST" app in the Branch.io portal (dev environment)
-    public const string DevBranchIoKey = "key_test_eoMhNwmzvq3WUBYiBF8XNbboAElr16yQ";
-
-    // This is the key for the "Polaris RC Stage/Dev LIVE" (stage environment)
-    public const string StageBranchIoKey = "key_live_bnVgKwoqFtZZUy9fErZWNbdprBgFY9FF"; // trying this for iOS
-
-
-    // 1/11/23 - links on iOS aren't opening the app for some reason
-    // iOS Branch Setup:
     // DEV
-    //  Bundle ID: com.polarisindustries.ORVTrails
-    // App Prefix: 3ZAM7Q8RD6
-    //  Signed by: Tom S ORV Dev PP
+    public const string DevBranchIoKey = "key_test_eoMhNwmzvq3WUBYiBF8XNbboAElr16yQ"; // Key for the "Polaris RC Stage/Dev TEST" app in the Branch.io portal (dev environment)
+    public const string DevBranchLink = "https://up0q.test-app.link/Eq74AgIEiwb";     // "Branch demo waypoint", dev env.
 
     // STAGE
-    //  Bundle ID: com.polarisindustries.orvtrails.inhouse
-    // App Prefix: YZHSD6YVEJ                              // Enterprise dev program
-    //  Signed by: Polaris Ride Command (In-House)
+    //public const string StageBranchIoKey = "key_live_bnVgKwoqFtZZUy9fErZWNbdprBgFY9FF"; // Key for the "Polaris RC Stage/Dev LIVE" app (stage environment)
+    //public const string StageBranchLink = "https://up0q.app.link/NGAbM2xQvwb";
+
+
+
+    // iOS Branch Setup Checklist:
+    // DEV
+    //            Bundle ID: com.polarisindustries.ORVTrails
+    //     Signing Identity: Developer (Automatic)
+    // Provisioning Profile: Tom S ORV Dev PP
+    //   CFBundleURLSchemes: riderxorv
+    // Entitlements file
+    //  com.apple.developer.associated-domains: applinks:up0q.test-app.link
+
+    // STAGE
+    //            Bundle ID: com.polarisindustries.orvtrails.inhouse
+    //     Signing Identity: Developer
+    // Provisioning Profile: Distribution: Polaris Industries, Inc.
+    //            Signed by: In-House (Automatic) or Polaris Ride Command (In-House)
+    //   CFBundleURLSchemes: riderxorv
+    // Entitlements file
+    //  com.apple.developer.associated-domains: applinks:up0q.app.link
 
 
     public App(MainPage page)
@@ -47,10 +50,11 @@ public partial class App : Application, IBranchSessionInterface, IBranchBUOSessi
             Debug.WriteLine($" {item.Key}: {item.Value}");
     }
 
+    /// <summary>
+    /// This method gets called after the Branch library initialization on app launch and after the app is opened by a branch link
+    /// </summary>
     public async void InitSessionComplete(BranchUniversalObject buo, BranchLinkProperties blp)
     {
-        // This method gets called after the Branch library initialization and after the app is opened by a branch link
-
         Debug.WriteLine($"Branch Universal Object InitSessionComplete");
 
         Debug.WriteLine("bou (Branch Universal Object)");
@@ -126,6 +130,8 @@ public partial class App : Application, IBranchSessionInterface, IBranchBUOSessi
 
     public void SessionRequestError(BranchError error)
     {
+        Debug.WriteLine("---------------------------------------");
         Debug.WriteLine($"Branch session request error, {error.ErrorCode}: {error.ErrorMessage}");
+        Debug.WriteLine("---------------------------------------");
     }
 }

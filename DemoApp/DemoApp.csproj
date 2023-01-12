@@ -12,7 +12,7 @@
 		<ApplicationTitle>Branch.io Demo</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.polarisindustries.orvtrails.inhouse</ApplicationId>
+		<ApplicationId>com.polarisindustries.ORVTrails</ApplicationId>
 		<ApplicationIdGuid>96ad4493-aec5-4454-8028-8fad868212fb</ApplicationIdGuid>
 
 		<!-- Versions -->
@@ -26,8 +26,9 @@
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
 	  <CreatePackage>false</CreatePackage>
-	  <CodesignProvision>Polaris Ride Command (In-House)</CodesignProvision>
-	  <CodesignKey>iPhone Distribution: Polaris Industries, Inc.</CodesignKey>
+	  <CodesignProvision>Tom S ORV Dev PP</CodesignProvision>
+	  <CodesignKey>iPhone Developer</CodesignKey>
+	  <CodesignEntitlements>Platforms\iOS\Entitlements.plist</CodesignEntitlements>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-ios|AnyCPU'">
 	  <CreatePackage>false</CreatePackage>

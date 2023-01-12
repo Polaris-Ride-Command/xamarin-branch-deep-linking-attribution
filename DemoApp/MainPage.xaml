@@ -23,20 +23,24 @@
 
             <VerticalStackLayout>
                 <Label
-                    Text="To test Branch links (only works on Android currently):" />
+                    Text="To test Branch links:"
+                    FontSize="16"
+                    Padding="0,0,0,5" />
 
                 <Label
                     Text="1.) Make sure the ORV Ride Command app is not installed on this device" />
 
                 <Label
-                    Text="2.) Click this button to copy a branch link to your clipboard: " />
+                    Text="2.) Click this button to copy a branch link to your clipboard:" />
 
                 <Button Text="Click Me!"
+                        x:Name="linkButton"
                         HorizontalOptions="Center"
                         Command="{Binding CopyLinkCommand}"
-                        Clicked="CopyLinkButtonClicked" />
+                        Clicked="CopyLinkButtonClicked"
+                        Padding="25,0" />
                 <Label
-                    Text="3.) Background this app and paste the link into a browser" />
+                    Text="{Binding Step3}" />
 
                 <Label
                     Text="4.) The link will open this app and Branch link data will be displayed on the link details page" />
